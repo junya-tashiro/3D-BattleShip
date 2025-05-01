@@ -20,18 +20,32 @@ void cpu::mousePressEvent(QMouseEvent *event)
     event->y();
 }
 
+void cpu::initializeGL()
+{
+    initializeOpenGLFunctions();     // Qt 5+ では必須
+    glClearColor(1.0, 1.0, 1.0, 1.0); // 背景色: 白
+    glEnable(GL_DEPTH_TEST);         // Zバッファ有効化（立体描画のために必須）
+}
 
 //描画用関数
 void cpu::paintGL()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // ← 真っ白防止
+
+    // 投影行列（カメラの画角など）
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glColor3f(0, 0, 0);
     gluPerspective(FOVY, (double)width / (double)height, 1.0, 100.0);
 
-    //カメラ視点セット
-    gluLookAt(0.0, 0.0, DISTANCE, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //位置はz軸上, 原点向き, y軸正が上方向
-    glRotatef(-pitch, 1.0, 0.0, 0.0 );  //x軸周りに剛体回転
-    glRotatef(-yaw, 0.0, 1.0, 0.0 );    //y'軸周りに剛体回転
+    // モデルビュー行列（カメラの位置・回転など）
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0.0, 0.0, DISTANCE,
+              0.0, 0.0, 0.0,
+              0.0, 1.0, 0.0);
+
+    glRotatef(-pitch, 1.0, 0.0, 0.0);
+    glRotatef(-yaw,   0.0, 1.0, 0.0);
 
     //フレーム描画
     int i;

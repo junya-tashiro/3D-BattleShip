@@ -7,7 +7,7 @@
 #include <QOpenGLFunctions>
 #include <QColor>
 #include <QOpenGLFunctions_1_0>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 
 
 class player : public QOpenGLWidget, public QOpenGLFunctions

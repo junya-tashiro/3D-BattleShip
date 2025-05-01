@@ -1,7 +1,7 @@
 #ifndef DEFINE_H
 #define DEFINE_H
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 
 #define BD_SIZE 4           //マスの1辺のサイズ
 #define INIT_PITCH -30.0    //ピッチ角初期値

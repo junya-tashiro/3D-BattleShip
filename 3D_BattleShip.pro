@@ -1,8 +1,12 @@
 QT       += core gui
+QT += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
+
+INCLUDEPATH = /opt/X11/include $$INCLUDEPATH
+LIBS += -L/opt/X11/lib -lGLU -lGL -lglut
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -32,7 +36,6 @@ HEADERS += \
     define.h \
     editor.h \
     mainwindow.h \
-    GLUT/glut.h \
     mainwindow_2.h \
     mainwindow_3.h \
     master.h \

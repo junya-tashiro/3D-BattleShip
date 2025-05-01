@@ -1,6 +1,6 @@
 #include "player_set_ship.h"
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include <math.h>
 #include <QMouseEvent>
 
@@ -21,6 +21,12 @@ player_set_ship::~player_set_ship()
     init_print_board();
 }
 
+void player_set_ship::initializeGL()
+{
+    initializeOpenGLFunctions();
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // 背景色: 白
+    glEnable(GL_DEPTH_TEST);          // Zバッファ有効化（3D描画に必須）
+}
 
 //SHIP表示の初期化用関数
 void player_set_ship::init_print_board()
@@ -149,17 +155,20 @@ void player_set_ship::timerEvent(QTimerEvent *)
 //描画用関数
 void player_set_ship::paintGL()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    set_canchoose_to_board();   //CANCHOOSEのセット
-
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glColor3f(0, 0, 0);
     gluPerspective(FOVY, (double)width / (double)height, 1.0, 100.0);
 
-    //カメラ視点セット
-    gluLookAt(0.0, 0.0, DISTANCE, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //位置はz軸上, 原点向き, y軸正が上方向
-    glRotatef(-pitch, 1.0, 0.0, 0.0 );  //x軸周りに剛体回転
-    glRotatef(-yaw, 0.0, 1.0, 0.0 );    //y'軸周りに剛体回転
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(0.0, 0.0, DISTANCE, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+
+    glRotatef(-pitch, 1.0, 0.0, 0.0 );
+    glRotatef(-yaw, 0.0, 1.0, 0.0 );
+
+    set_canchoose_to_board();   //CANCHOOSEのセット
 
     //フレーム描画
     int i;

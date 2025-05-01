@@ -8,7 +8,7 @@
 #include <QKeyEvent>
 #include <QColor>
 #include <QOpenGLFunctions_1_0>
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 
 
 class player_set_ship : public player
@@ -56,6 +56,9 @@ public:
 
 private slots:
     void deleteSlot();
+
+protected:
+    void initializeGL() override;
 
 private:
     enum ship ship[9] = {

@@ -1,5 +1,6 @@
 #include "result.h"
 #include "ui_result.h"
+#include "ui_result_2.h"
 
 
 //コンストラクタ

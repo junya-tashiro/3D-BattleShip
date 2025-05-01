@@ -12,6 +12,9 @@ public:
 
     void mousePressEvent(QMouseEvent *event);
 
+protected:
+    void initializeGL() override;
+
 private:
     void paintGL();
 };

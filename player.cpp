@@ -1,6 +1,6 @@
 #include "player.h"
 
-#include <GLUT/glut.h>
+#include <GL/glut.h>
 #include <math.h>
 #include <QMouseEvent>
 
@@ -214,6 +214,8 @@ void player::initializeGL()
 {
     initializeOpenGLFunctions();
     glClearColor(1, 1, 1, 1);
+    glEnable(GL_DEPTH_TEST); // Zバッファ有効
+    glEnable(GL_POINT_SMOOTH);
 }
 
 
@@ -229,6 +231,7 @@ void player::resizeGL(int w, int h)
 //描画用関数
 void player::paintGL()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glColor3f(0, 0, 0);
     gluPerspective(FOVY, (double)width / (double)height, 1.0, 100.0);
